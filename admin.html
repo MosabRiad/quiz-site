@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإدارة - موقع الاختبارات</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="container">
+        <!-- شريط التنقل -->
+        <nav class="admin-navbar">
+            <div class="navbar-content">
+                <h2>🎓 لوحة تحكم الإدارة</h2>
+                <div class="nav-buttons">
+                    <button id="logoutBtn" class="btn btn-secondary">تسجيل الخروج</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- القائمة الجانبية -->
+        <div class="admin-container">
+            <aside class="admin-sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" data-tab="upload" class="menu-link active">📤 رفع الأسئلة</a></li>
+                    <li><a href="#" data-tab="manage" class="menu-link">📋 إدارة الأسئلة</a></li>
+                    <li><a href="#" data-tab="results" class="menu-link">📊 النتائج</a></li>
+                </ul>
+            </aside>
+
+            <!-- المحتوى الرئيسي -->
+            <main class="admin-main">
+                
+                <!-- تاب رفع الأسئلة -->
+                <div id="upload-tab" class="tab-content active">
+                    <div class="card">
+                        <h2>📤 رفع ملف PowerPoint</h2>
+                        <div class="upload-area" id="uploadArea">
+                            <input type="file" id="pptFile" accept=".pptx,.ppt" hidden>
+                            <div class="upload-icon">📁</div>
+                            <p>اسحب ملف PowerPoint هنا أو انقر للاختيار</p>
+                            <small>.pptx أو .ppt</small>
+                        </div>
+                    </div>
+
+                    <!-- إعدادات توليد الأسئلة -->
+                    <div class="card">
+                        <h2>⚙️ إعدادات الأسئلة</h2>
+                        <div class="settings-grid">
+                            <div class="input-group">
+                                <label>عدد الأسئلة المطلوب توليدها:</label>
+                                <input type="number" id="questionCount" value="5" min="1" max="50">
+                            </div>
+
+                            <div class="input-group">
+                                <label>نوع السؤال:</label>
+                                <select id="questionType">
+                                    <option value="multiple">اختيار من متعدد</option>
+                                    <option value="true_false">صح/خطأ</option>
+                                    <option value="short_answer">إجابة قصيرة</option>
+                                    <option value="mixed">مختلط</option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label>مستوى الصعوبة:</label>
+                                <select id="difficulty">
+                                    <option value="easy">سهل</option>
+                                    <option value="medium">متوسط</option>
+                                    <option value="hard">صعب</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label>مفتاح Gemini API (اختياري):</label>
+                            <input type="password" id="geminiKey" placeholder="ضع مفتاح API الخاص بك">
+                            <small>احفظ المفتاح في المتصفح (محلياً فقط)</small>
+                        </div>
+
+                        <button id="generateBtn" class="btn btn-success" style="margin-top: 15px;">🤖 توليد الأسئلة</button>
+                    </div>
+
+                    <!-- معاينة الأسئلة المولدة -->
+                    <div id="generatedPreview" class="card" style="display: none;">
+                        <h2>✅ معاينة الأسئلة المولدة</h2>
+                        <div id="previewContent"></div>
+                        <div style="margin-top: 20px; display: flex; gap: 10px;">
+                            <button id="confirmBtn" class="btn btn-success">✓ حفظ الأسئلة</button>
+                            <button id="regenerateBtn" class="btn btn-secondary">🔄 إعادة التوليد</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- تاب إدارة الأسئلة -->
+                <div id="manage-tab" class="tab-content">
+                    <div class="card">
+                        <h2>📋 الأسئلة المحفوظة</h2>
+                        <div id="questionsList"></div>
+                    </div>
+                </div>
+
+                <!-- تاب النتائج -->
+                <div id="results-tab" class="tab-content">
+                    <div class="card">
+                        <h2>📊 نتائج الطلاب</h2>
+                        <div id="resultsList"></div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <!-- تنبيهات -->
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
