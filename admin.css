@@ -1,0 +1,540 @@
+/* ============================================
+   لوحة تحكم الإدارة - Admin Panel Styles
+   ============================================ */
+
+/* متغيرات CSS */
+:root {
+    --primary: #667eea;
+    --secondary: #764ba2;
+    --success: #48bb78;
+    --danger: #f56565;
+    --warning: #ed8936;
+    --light: #f7fafc;
+    --dark: #2d3748;
+    --border: #e2e8f0;
+    --text: #4a5568;
+}
+
+/* التخطيط الأساسي */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* شريط التنقل العلوي */
+.admin-navbar {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-content h2 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* الحاوية الرئيسية */
+.admin-container {
+    display: flex;
+    flex: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* القائمة الجانبية */
+.admin-sidebar {
+    width: 250px;
+    background: white;
+    border-left: 1px solid var(--border);
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin: 0;
+}
+
+.menu-link {
+    display: block;
+    padding: 15px 20px;
+    color: var(--text);
+    text-decoration: none;
+    border-right: 4px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+    font-size: 1em;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: right;
+}
+
+.menu-link:hover {
+    background: var(--light);
+    border-right-color: var(--primary);
+    color: var(--primary);
+}
+
+.menu-link.active {
+    background: rgba(102, 126, 234, 0.1);
+    border-right-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* المحتوى الرئيسي */
+.admin-main {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+/* التابات */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* البطاقات */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border);
+}
+
+.card h2 {
+    color: var(--dark);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid var(--light);
+    padding-bottom: 15px;
+}
+
+/* منطقة الرفع */
+.upload-area {
+    border: 2px dashed var(--primary);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    background: rgba(102, 126, 234, 0.05);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.upload-area:hover {
+    border-color: var(--secondary);
+    background: rgba(118, 75, 162, 0.05);
+}
+
+.upload-area.dragover {
+    border-color: var(--success);
+    background: rgba(72, 187, 120, 0.05);
+}
+
+.upload-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.upload-area p {
+    margin: 10px 0;
+    color: var(--dark);
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.upload-area small {
+    color: var(--text);
+    display: block;
+    margin-top: 10px;
+}
+
+/* الشبكة للإعدادات */
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* مجموعات الإدخال */
+.input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+}
+
+.input-group input,
+.input-group select {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.input-group small {
+    color: var(--text);
+    margin-top: 5px;
+    font-size: 0.85em;
+}
+
+/* الأزرار */
+.btn {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background: var(--light);
+    color: var(--dark);
+    border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: var(--border);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success), #38a169);
+    color: white;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(72, 187, 120, 0.3);
+}
+
+.btn-danger {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #e53e3e;
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* معاينة الأسئلة */
+#generatedPreview {
+    background: rgba(72, 187, 120, 0.05);
+    border: 1px solid var(--success);
+}
+
+#previewContent {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.question-item {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary);
+}
+
+.question-item strong {
+    color: var(--dark);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.question-item ol {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.question-item li {
+    margin: 5px 0;
+    color: var(--text);
+}
+
+/* قائمة الأسئلة */
+#questionsList,
+#resultsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.question-row {
+    background: var(--light);
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.question-row small {
+    color: var(--text);
+    display: block;
+    margin-top: 5px;
+}
+
+.question-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-icon {
+    padding: 8px 12px;
+    font-size: 0.85em;
+}
+
+/* النتائج */
+.result-row {
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+    align-items: center;
+}
+
+.result-stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.result-stat label {
+    color: var(--text);
+    font-size: 0.85em;
+    margin-bottom: 5px;
+}
+
+.result-stat strong {
+    color: var(--dark);
+    font-size: 1.2em;
+}
+
+/* التنبيهات */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 15px 20px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 2000;
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+.notification.success {
+    background: var(--success);
+}
+
+.notification.error {
+    background: var(--danger);
+}
+
+.notification.warning {
+    background: var(--warning);
+}
+
+.notification.info {
+    background: var(--primary);
+}
+
+/* حالة التحميل */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column;
+    }
+
+    .admin-sidebar {
+        width: 100%;
+        padding: 10px 0;
+        position: static;
+    }
+
+    .sidebar-menu {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .sidebar-menu li {
+        flex: 1;
+        min-width: 150px;
+    }
+
+    .menu-link {
+        padding: 12px 15px;
+        border-bottom: 2px solid transparent;
+        border-right: none;
+    }
+
+    .menu-link:hover,
+    .menu-link.active {
+        border-bottom-color: var(--primary);
+    }
+
+    .admin-main {
+        padding: 20px;
+    }
+
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-row {
+        grid-template-columns: 1fr;
+    }
+
+    .navbar-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .navbar-content h2 {
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-navbar {
+        padding: 15px;
+    }
+
+    .navbar-content h2 {
+        font-size: 1.1em;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .card h2 {
+        font-size: 1.2em;
+    }
+
+    .upload-area {
+        padding: 25px;
+    }
+
+    .upload-icon {
+        font-size: 2em;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+}
