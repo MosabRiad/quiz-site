@@ -1,5 +1,5 @@
 // البيانات - الأسئلة والإجابات
-const quizData = [
+let quizData = [
     {
         question: "ما هي عاصمة فرنسا؟",
         options: ["لندن", "برلين", "باريس", "روما"],
@@ -31,9 +31,22 @@ let currentQuestion = 0;
 let studentName = "";
 let userAnswers = new Array(quizData.length).fill(null);
 let timeRemaining = 30 * 60; // 30 دقيقة بالثواني
+let timerInterval = null;
 
 // تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
+    // تحميل الأسئلة من localStorage إذا كانت موجودة
+    const currentQuiz = localStorage.getItem('currentQuiz');
+    if (currentQuiz) {
+        try {
+            quizData = JSON.parse(currentQuiz);
+            userAnswers = new Array(quizData.length).fill(null);
+        } catch (e) {
+            console.log('استخدام الأسئلة الافتراضية');
+        }
+    }
+    
+    // إعداد مستمعات الأحداث
     document.getElementById('nameForm').addEventListener('submit', startQuiz);
     document.getElementById('nextBtn').addEventListener('click', nextQuestion);
     document.getElementById('prevBtn').addEventListener('click', previousQuestion);
@@ -148,6 +161,19 @@ function submitQuiz() {
     const percentage = Math.round((correctCount / quizData.length) * 100);
     const score = correctCount + '/' + quizData.length;
     
+    // حفظ النتيجة
+    const result = {
+        name: studentName,
+        score: correctCount,
+        total: quizData.length,
+        percentage: percentage,
+        date: new Date().toLocaleString('ar-SA')
+    };
+    
+    let studentResults = JSON.parse(localStorage.getItem('studentResults')) || [];
+    studentResults.push(result);
+    localStorage.setItem('studentResults', JSON.stringify(studentResults));
+    
     // عرض النتائج
     document.getElementById('quizScreen').classList.remove('active');
     document.getElementById('resultScreen').classList.add('active');
@@ -162,7 +188,7 @@ function submitQuiz() {
 
 // المؤقت
 function startTimer() {
-    const timerInterval = setInterval(function() {
+    timerInterval = setInterval(function() {
         if (timeRemaining <= 0) {
             clearInterval(timerInterval);
             if (document.getElementById('quizScreen').classList.contains('active')) {
@@ -173,21 +199,29 @@ function startTimer() {
         }
         
         timeRemaining--;
-        
-        const minutes = Math.floor(timeRemaining / 60);
-        const seconds = timeRemaining % 60;
-        
-        const timerDisplay = 
-            String(minutes).padStart(2, '0') + ':' + 
-            String(seconds).padStart(2, '0');
-        
-        const timerElement = document.getElementById('timer');
-        if (timerElement) {
-            timerElement.textContent = timerDisplay;
-        }
+        updateTimerDisplay();
     }, 1000);
 }
 
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeRemaining / 60);
+    const seconds = timeRemaining % 60;
+    
+    const timerDisplay = 
+        String(minutes).padStart(2, '0') + ':' + 
+        String(seconds).padStart(2, '0');
+    
+    const timerElement = document.getElementById('timer');
+    if (timerElement) {
+        timerElement.textContent = timerDisplay;
+        
+        // تغيير اللون عندما يتبقى أقل من 5 دقائق
+        if (timeRemaining < 300) {
+            timerElement.style.color = '#f56565';
+        }
+    }
+}
+
 function stopTimer() {
-    // يتم إيقاف المؤقت عند الانتهاء
+    clearInterval(timerInterval);
 }
