@@ -1,0 +1,1 @@
+Update admin.js to call backend endpoints (login with PIN, upload, generate, save quizzes)
