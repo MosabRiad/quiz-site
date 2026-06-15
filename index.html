@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موقع الاختبارات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- شاشة إدخال الاسم -->
+        <div id="nameScreen" class="screen active">
+            <div class="form-container">
+                <h1>🎓 موقع الاختبارات</h1>
+                <p class="subtitle">أدخل اسمك للبدء في الاختبار</p>
+                <form id="nameForm">
+                    <input 
+                        type="text" 
+                        id="studentName" 
+                        placeholder="أدخل اسمك كاملاً" 
+                        required
+                        maxlength="50"
+                    >
+                    <button type="submit" class="btn btn-primary">ابدأ الاختبار</button>
+                </form>
+                <p class="info-text">تأكد من إدخال اسمك الصحيح</p>
+            </div>
+        </div>
+
+        <!-- شاشة الأسئلة -->
+        <div id="quizScreen" class="screen">
+            <div class="quiz-container">
+                <!-- شريط التقدم -->
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <p id="progressText" class="progress-text">السؤال 1 من 5</p>
+
+                <!-- معلومات الطالب -->
+                <div class="student-info">
+                    <span>اسم الطالب: <strong id="displayName"></strong></span>
+                    <span>الوقت: <strong id="timer">30:00</strong></span>
+                </div>
+
+                <!-- الأسئلة -->
+                <div id="quizContent"></div>
+
+                <!-- الأزرار -->
+                <div class="button-group">
+                    <button id="prevBtn" class="btn btn-secondary" style="display: none;">السؤال السابق</button>
+                    <button id="nextBtn" class="btn btn-primary">السؤال التالي</button>
+                    <button id="submitBtn" class="btn btn-success" style="display: none;">إرسال الإجابات</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة النتائج -->
+        <div id="resultScreen" class="screen">
+            <div class="result-container">
+                <h1>🎉 انتهيت من الاختبار!</h1>
+                <div class="result-card">
+                    <p class="result-label">اسم الطالب:</p>
+                    <p class="result-value" id="finalName"></p>
+                    
+                    <p class="result-label">النتيجة النهائية:</p>
+                    <p class="result-score" id="finalScore"></p>
+                    
+                    <p class="result-label">عدد الإجابات الصحيحة:</p>
+                    <p class="result-value" id="correctAnswers"></p>
+                    
+                    <p class="result-label">النسبة المئوية:</p>
+                    <p class="result-percentage" id="percentage"></p>
+                </div>
+                <button onclick="location.reload()" class="btn btn-primary">اختبار آخر</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
