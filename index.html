@@ -1,81 +1,313 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع الاختبارات</title>
-    <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>قريباً انطلاق الموقع</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+
+height:100vh;
+
+background:linear-gradient(135deg,#0f172a,#1e293b,#2563eb);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+}
+
+.container{
+
+width:90%;
+max-width:700px;
+
+padding:45px;
+
+text-align:center;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+border:1px solid rgba(255,255,255,.15);
+
+border-radius:30px;
+
+box-shadow:0 20px 50px rgba(0,0,0,.35);
+
+}
+
+.logo{
+
+font-size:70px;
+
+margin-bottom:15px;
+
+animation:float 3s infinite ease-in-out;
+
+}
+
+h1{
+
+font-size:42px;
+
+color:#fff;
+
+margin-bottom:10px;
+
+}
+
+.subtitle{
+
+font-size:22px;
+
+color:#dbeafe;
+
+margin-bottom:35px;
+
+}
+
+.countdown{
+
+display:flex;
+
+justify-content:center;
+
+gap:18px;
+
+flex-wrap:wrap;
+
+margin-bottom:35px;
+
+}
+
+.box{
+
+width:110px;
+
+padding:20px;
+
+background:rgba(255,255,255,.12);
+
+border-radius:20px;
+
+}
+
+.box span{
+
+display:block;
+
+font-size:42px;
+
+font-weight:900;
+
+color:#fff;
+
+}
+
+.box small{
+
+font-size:16px;
+
+color:#cbd5e1;
+
+}
+
+.message{
+
+font-size:18px;
+
+color:#fff;
+
+line-height:1.9;
+
+margin-bottom:35px;
+
+}
+
+footer{
+
+font-size:16px;
+
+color:#94a3b8;
+
+}
+
+footer b{
+
+color:#fff;
+
+}
+
+@keyframes float{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-10px);
+
+}
+
+}
+
+@media(max-width:600px){
+
+h1{
+
+font-size:30px;
+
+}
+
+.subtitle{
+
+font-size:18px;
+
+}
+
+.box{
+
+width:90px;
+
+}
+
+.box span{
+
+font-size:32px;
+
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
-    <div class="container">
-        <!-- شاشة إدخال الاسم -->
-        <div id="nameScreen" class="screen active">
-            <div class="form-container">
-                <h1>🎓 موقع الاختبارات</h1>
-                <p class="subtitle">أدخل اسمك للبدء في الاختبار</p>
-                <form id="nameForm">
-                    <input 
-                        type="text" 
-                        id="studentName" 
-                        placeholder="أدخل اسمك كاملاً" 
-                        required
-                        maxlength="50"
-                    >
-                    <button type="submit" class="btn btn-primary">ابدأ الاختبار</button>
-                </form>
-                <p class="info-text">تأكد من إدخال اسمك الصحيح</p>
-            </div>
-        </div>
 
-        <!-- شاشة الأسئلة -->
-        <div id="quizScreen" class="screen">
-            <div class="quiz-container">
-                <!-- شريط التقدم -->
-                <div class="progress-bar">
-                    <div id="progressFill" class="progress-fill"></div>
-                </div>
-                <p id="progressText" class="progress-text">السؤال 1 من 5</p>
+<div class="container">
 
-                <!-- معلومات الطالب -->
-                <div class="student-info">
-                    <span>اسم الطالب: <strong id="displayName"></strong></span>
-                    <span>الوقت: <strong id="timer">30:00</strong></span>
-                </div>
+<div class="logo">🚀</div>
 
-                <!-- الأسئلة -->
-                <div id="quizContent"></div>
+<h1>قريباً انطلاق الموقع</h1>
 
-                <!-- الأزرار -->
-                <div class="button-group">
-                    <button id="prevBtn" class="btn btn-secondary" style="display: none;">السؤال السابق</button>
-                    <button id="nextBtn" class="btn btn-primary">السؤال التالي</button>
-                    <button id="submitBtn" class="btn btn-success" style="display: none;">إرسال الإجابات</button>
-                </div>
-            </div>
-        </div>
+<div class="subtitle">
 
-        <!-- شاشة النتائج -->
-        <div id="resultScreen" class="screen">
-            <div class="result-container">
-                <h1>🎉 انتهيت من الاختبار!</h1>
-                <div class="result-card">
-                    <p class="result-label">اسم الطالب:</p>
-                    <p class="result-value" id="finalName"></p>
-                    
-                    <p class="result-label">النتيجة النهائية:</p>
-                    <p class="result-score" id="finalScore"></p>
-                    
-                    <p class="result-label">عدد الإجابات الصحيحة:</p>
-                    <p class="result-value" id="correctAnswers"></p>
-                    
-                    <p class="result-label">النسبة المئوية:</p>
-                    <p class="result-percentage" id="percentage"></p>
-                </div>
-                <button onclick="location.reload()" class="btn btn-primary">اختبار آخر</button>
-            </div>
-        </div>
-    </div>
+انتظرونا بمفاجآت عديدة ومميزة
 
-    <script src="script.js"></script>
+</div>
+
+<div class="countdown">
+
+<div class="box">
+
+<span id="days">0</span>
+
+<small>يوم</small>
+
+</div>
+
+<div class="box">
+
+<span id="hours">0</span>
+
+<small>ساعة</small>
+
+</div>
+
+<div class="box">
+
+<span id="minutes">0</span>
+
+<small>دقيقة</small>
+
+</div>
+
+<div class="box">
+
+<span id="seconds">0</span>
+
+<small>ثانية</small>
+
+</div>
+
+</div>
+
+<div class="message">
+
+نعمل حالياً على تجهيز تجربة جديدة ومميزة لكم ❤️<br>
+
+ترقبوا الإطلاق الرسمي خلال أيام قليلة.
+
+</div>
+
+<footer>
+
+جميع الحقوق محفوظة © <b>مصعب الدريملي</b>
+
+</footer>
+
+</div>
+
+<script>
+
+const targetDate = new Date();
+
+targetDate.setDate(targetDate.getDate()+3);
+
+function updateCountdown(){
+
+const now = new Date();
+
+const diff = targetDate - now;
+
+if(diff <=0){
+
+document.querySelector(".countdown").innerHTML="<h2 style='color:white'>تم الانطلاق 🎉</h2>";
+
+return;
+
+}
+
+const days=Math.floor(diff/(1000*60*60*24));
+
+const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+
+const minutes=Math.floor((diff%(1000*60*60))/(1000*60));
+
+const seconds=Math.floor((diff%(1000*60))/1000);
+
+document.getElementById("days").innerHTML=days;
+document.getElementById("hours").innerHTML=hours;
+document.getElementById("minutes").innerHTML=minutes;
+document.getElementById("seconds").innerHTML=seconds;
+
+}
+
+updateCountdown();
+
+setInterval(updateCountdown,1000);
+
+</script>
+
 </body>
 </html>
