@@ -1,81 +1,139 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>موقع الاختبارات</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قريباً - موقعنا قيد الإطلاق</title>
+  <meta name="description" content="موقعنا قيد الانطلاق - انتظرونا" />
+  <style>
+    :root {
+      --bg: #0f1724;
+      --card: #0b1220;
+      --accent: #06b6d4;
+      --text: #f8fafc;
+      --muted: #9ca3af;
+      --btn-bg: #0ea5a4;
+    }
+    html,body{height:100%;}
+    body {
+      direction: rtl;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .coming-soon {
+      text-align: center;
+      padding: 40px;
+      max-width: 900px;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    }
+    .coming-soon h1 { font-size: clamp(28px, 6vw, 48px); margin: 0 0 12px; }
+    .coming-soon .lead { color: var(--muted); font-size: 18px; margin: 0 0 20px; }
+    .countdown-btn {
+      appearance: none; -webkit-appearance: none;
+      border: none;
+      background: linear-gradient(90deg, var(--btn-bg), #0b948f);
+      color: white;
+      padding: 12px 20px;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: not-allowed;
+      opacity: 0.95;
+      transition: transform .12s ease, opacity .12s ease;
+      box-shadow: 0 6px 18px rgba(14,148,143,0.18);
+    }
+    .countdown-btn.enabled { cursor: pointer; opacity: 1; }
+    .countdown-btn:active { transform: translateY(1px); }
+    .site-footer { width:100%; text-align:center; padding:16px 0; background:transparent; color:var(--muted); position:fixed; bottom:0; left:0; }
+    @media (max-width:520px) {
+      .countdown-btn { width:100%; font-size:16px; }
+      .coming-soon { padding:24px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- شاشة إدخال الاسم -->
-        <div id="nameScreen" class="screen active">
-            <div class="form-container">
-                <h1>🎓 موقع الاختبارات</h1>
-                <p class="subtitle">أدخل اسمك للبدء في الاختبار</p>
-                <form id="nameForm">
-                    <input 
-                        type="text" 
-                        id="studentName" 
-                        placeholder="أدخل اسمك كاملاً" 
-                        required
-                        maxlength="50"
-                    >
-                    <button type="submit" class="btn btn-primary">ابدأ الاختبار</button>
-                </form>
-                <p class="info-text">تأكد من إدخال اسمك الصحيح</p>
-            </div>
-        </div>
+  <div class="coming-soon">
+    <h1>موقعنا قيد الإطلاق</h1>
+    <p class="lead">انتظرونا — سنعود قريباً!</p>
 
-        <!-- شاشة الأسئلة -->
-        <div id="quizScreen" class="screen">
-            <div class="quiz-container">
-                <!-- شريط التقدم -->
-                <div class="progress-bar">
-                    <div id="progressFill" class="progress-fill"></div>
-                </div>
-                <p id="progressText" class="progress-text">السؤال 1 من 5</p>
+    <!-- data-target: وقت الإطلاق بصيغة ISO (مثال: 2026-07-01T12:00:00Z)
+         data-url: (اختياري) الرابط الذي يفتح عند انتهاء العد -->
+    <button id="countdownBtn" class="countdown-btn" data-target="2026-07-01T12:00:00Z" data-url="/">
+      جاري التحضير...
+    </button>
+  </div>
 
-                <!-- معلومات الطالب -->
-                <div class="student-info">
-                    <span>اسم الطالب: <strong id="displayName"></strong></span>
-                    <span>الوقت: <strong id="timer">30:00</strong></span>
-                </div>
+  <footer class="site-footer">
+    <p>© مصعب الدريملي</p>
+  </footer>
 
-                <!-- الأسئلة -->
-                <div id="quizContent"></div>
+  <script>
+    (function () {
+      const btn = document.getElementById('countdownBtn');
+      if (!btn) return;
 
-                <!-- الأزرار -->
-                <div class="button-group">
-                    <button id="prevBtn" class="btn btn-secondary" style="display: none;">السؤال السابق</button>
-                    <button id="nextBtn" class="btn btn-primary">السؤال التالي</button>
-                    <button id="submitBtn" class="btn btn-success" style="display: none;">إرسال الإجابات</button>
-                </div>
-            </div>
-        </div>
+      const targetAttr = btn.getAttribute('data-target');
+      let targetDate = targetAttr ? new Date(targetAttr) : new Date(Date.now() + 3 * 24 * 3600 * 1000);
+      const targetUrl = btn.getAttribute('data-url') || null;
 
-        <!-- شاشة النتائج -->
-        <div id="resultScreen" class="screen">
-            <div class="result-container">
-                <h1>🎉 انتهيت من الاختبار!</h1>
-                <div class="result-card">
-                    <p class="result-label">اسم الطالب:</p>
-                    <p class="result-value" id="finalName"></p>
-                    
-                    <p class="result-label">النتيجة النهائية:</p>
-                    <p class="result-score" id="finalScore"></p>
-                    
-                    <p class="result-label">عدد الإجابات الصحيحة:</p>
-                    <p class="result-value" id="correctAnswers"></p>
-                    
-                    <p class="result-label">النسبة المئوية:</p>
-                    <p class="result-percentage" id="percentage"></p>
-                </div>
-                <button onclick="location.reload()" class="btn btn-primary">اختبار آخر</button>
-            </div>
-        </div>
-    </div>
+      btn.setAttribute('aria-live', 'polite');
+      btn.setAttribute('aria-label', 'زر العد التنازلي لوقت إطلاق الموقع');
 
-    <script src="script.js"></script>
+      function formatTimeLeft(ms) {
+        if (ms <= 0) return null;
+        const s = Math.floor(ms / 1000);
+        const days = Math.floor(s / (24 * 3600));
+        const hours = Math.floor((s % (24 * 3600)) / 3600);
+        const minutes = Math.floor((s % 3600) / 60);
+        const seconds = s % 60;
+        const parts = [];
+        if (days > 0) parts.push(days + 'ي');
+        parts.push(String(hours).padStart(2, '0') + 'س');
+        parts.push(String(minutes).padStart(2, '0') + 'د');
+        parts.push(String(seconds).padStart(2, '0') + 'ث');
+        return parts.join(' ');
+      }
+
+      function update() {
+        const now = new Date();
+        const diff = targetDate - now;
+        const timeStr = formatTimeLeft(diff);
+        if (timeStr) {
+          btn.textContent = 'انتظر — ' + timeStr;
+          btn.classList.remove('enabled');
+          btn.disabled = true;
+          btn.style.cursor = 'not-allowed';
+        } else {
+          btn.textContent = 'انطلق الآن';
+          btn.classList.add('enabled');
+          btn.disabled = false;
+          btn.style.cursor = 'pointer';
+          clearInterval(intervalId);
+        }
+      }
+
+      btn.addEventListener('click', (e) => {
+        if (!btn.classList.contains('enabled')) return;
+        if (targetUrl) {
+          window.location.href = targetUrl;
+        } else {
+          window.location.reload();
+        }
+      });
+
+      update();
+      const intervalId = setInterval(update, 1000);
+    })();
+  </script>
 </body>
 </html>
